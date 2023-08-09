@@ -13,7 +13,7 @@ const App = () => {
 
   useEffect(() => {
     // Pemanggilan API menggunakan Axios
-    axios.get('http://127.0.0.1:3333/')
+    fetch.get('http://127.0.0.1:3333/')
       .then(response => {
         setNotes(response.notes);
       })

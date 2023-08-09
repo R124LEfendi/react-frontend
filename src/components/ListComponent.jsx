@@ -6,7 +6,7 @@ function ListComponent() {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        axios.get('http://127.0.0.1:3333/user')
+        fetch('http://127.0.0.1:3333/user')
             // .then(res => res.json())
             .then(response => {
                 setData(response.data)
