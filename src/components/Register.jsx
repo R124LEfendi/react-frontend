@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom'
 
 
 const Register = () => {
@@ -10,6 +10,7 @@ const Register = () => {
         password: '',
     });
 
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -23,11 +24,13 @@ const Register = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         // Call the register API endpoint with Axios
-        axios.post('http://127.0.0.1:3333/api/register', formData)
+        axios.post('http://127.0.0.1:3333/register', formData)
             .then((response) => {
 
                 // Handle the successful registration (e.g., show a success message, redirect, etc.)
                 console.log('Registration successful!', response.data);
+
+                navigate('/content');
 
             })
             .catch((error) => {
