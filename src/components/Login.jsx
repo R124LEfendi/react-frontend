@@ -29,7 +29,7 @@ const Login = () => {
             .then((response) => {
                 // Handle successful login
                 console.log('Login successful!', response.data);
-
+                localStorage.setItem('token', response.data.token);
                 navigate('/content');
 
             })

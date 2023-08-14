@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const Content = () => {
     const tableStyle = {
@@ -10,8 +12,17 @@ const Content = () => {
     const [newNote, setNewNote] = useState({ title: "", content: "" });
     const [editNote, setEditNote] = useState(null);
 
+    const [accessToken, setAccessToken] = useState('');
+    const navigate = useNavigate();
+
     useEffect(() => {
         fetchNotes();
+        const storedAccessToken = localStorage.getItem('access_token');
+        if (storedAccessToken) {
+            setAccessToken(storedAccessToken);
+        } else {
+            navigate('/content'); // Redirect ke halaman login jika token tidak ada
+        }
     }, []);
 
     const fetchNotes = () => {
@@ -22,6 +33,14 @@ const Content = () => {
             .catch(error => {
                 console.error('Error fetching data:', error);
             });
+    };
+
+    const handleLogout = () => {
+        // Menghapus token dari penyimpanan lokal
+        localStorage.removeItem('access_token');
+
+        // Navigasi kembali ke halaman login (atau halaman lain yang sesuai)
+        navigate('/register'); // Ganti '/login' dengan halaman yang sesuai
     };
 
     const handleAddNote = () => {
@@ -35,6 +54,7 @@ const Content = () => {
                 console.error('Error adding note:', error);
             });
     };
+
 
     const handleEditNote = (id) => {
         const updatedNote = notes.find(note => note.id === id);
@@ -138,7 +158,7 @@ const Content = () => {
                     ))}
                 </tbody>
             </table>
-
+            <button onClick={handleLogout}>Logout</button>
         </>
     );
 }
